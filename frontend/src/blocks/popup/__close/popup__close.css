@@ -1,0 +1,31 @@
+.popup__close{
+    background: url(../../../images/closeic.svg)  center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    height: 40.7px;
+    width: 40.7px;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+    position: absolute;
+    top: -50px;
+    right: -30px;
+    cursor: pointer;
+    outline: none;}
+    
+.popup__close:hover{
+    opacity: 0.5;
+    cursor: pointer;
+   
+}
+@media screen and (max-width: 700px){
+    .popup__close{
+      margin-left: 260px;
+      height: 30px;
+      width: 30px;
+      top: -35px;
+    
+    }
+  }

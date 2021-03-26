@@ -1,0 +1,10 @@
+.profile__photo {
+    border-radius: 50%;
+    width: 127px;
+    height: 127px;
+    object-fit: cover;
+}
+.profile__photor:hover{
+    opacity: 0.5;
+    transition: opacity 0.5s linear;
+}

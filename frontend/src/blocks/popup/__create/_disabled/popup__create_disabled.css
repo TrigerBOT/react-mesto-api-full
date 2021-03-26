@@ -1,0 +1,12 @@
+.popup__create_disabled{
+    background: url(../../../../images/create__invalid.jpg) center center !important;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+    outline: none;
+}
+

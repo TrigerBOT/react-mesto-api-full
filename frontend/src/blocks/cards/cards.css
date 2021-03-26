@@ -1,0 +1,22 @@
+.cards{
+    width: 69%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 282px 282px 282px;
+    grid-gap: 18px 21px;
+    justify-content: center; 
+    color: black;
+    align-items: center;
+}
+@media screen and (min-width:700px) and (max-width :1023px){
+    .cards{
+        grid-template-columns: 282px 282px ;
+  
+    }
+}
+@media screen and (max-width:699px){
+    .cards{
+        grid-template-columns: 282px ;
+
+    }
+}

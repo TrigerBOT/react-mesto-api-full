@@ -1,0 +1,43 @@
+.popup__confirm {
+    width: 358px;
+    height: 50.15px;
+    margin-left: 36px;
+    margin-bottom: 36px;
+    background: url(../../../images/confirm.jpg) center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+.popup__confirm:hover {
+    opacity: 0.5;
+}
+
+.popup__confirm:active {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.popup__confirm:focus {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+@media screen and (max-width: 700px) {
+    .popup__confirm {
+        width: 200px;
+        height: 40px;
+        margin-bottom: 20px;
+        margin-left: 20px;
+    }
+}

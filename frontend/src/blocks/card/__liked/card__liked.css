@@ -1,0 +1,29 @@
+.card__liked{
+    background-image: url(../../../images/liked.svg);
+    width:  21px;
+    height: 18.13px;
+    align-self: center;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+    outline: none;
+}
+.card__liked:hover{
+    opacity: 0.5;
+    cursor: pointer;
+    }
+   
+    .card__liked:active{
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        border-radius: 0;
+        
+    }
+    .card__liked:focus{
+        padding: 0;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+    }

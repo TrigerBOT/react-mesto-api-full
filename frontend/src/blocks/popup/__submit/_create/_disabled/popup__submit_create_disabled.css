@@ -1,0 +1,3 @@
+.popup__submit_create_disabled{
+    background: url(../../../../images/create__invalid.jpg) center center !important;
+}
