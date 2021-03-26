@@ -1,8 +1,0 @@
-@import url(./_over/profile__avatar_over.css);
-.profile__avatar{
-    position: relative;
-    width: 128px;
-    height: 128px;
-    margin: auto;
-    overflow: hidden;
-}
