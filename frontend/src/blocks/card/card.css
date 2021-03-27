@@ -1,0 +1,13 @@
+@import url(./__photo/card__photo.css);
+@import url(./__title/card__title.css);
+@import url(./__text/card__text.css);
+@import url(./__like/card__like.css);
+@import url(./__delete/card__delete.css);
+@import url(./__liked/card__liked.css);
+@import url(./__counter/card__counter.css);
+@import url(./__likearea/card__likearea.css);
+.card{
+    background-color: white;
+    border-radius: 10px;
+    position: relative;
+}

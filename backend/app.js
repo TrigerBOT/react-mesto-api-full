@@ -11,7 +11,6 @@ const { createUser, login } = require("./controllers/users");
 const usersRout = require("./routes/usersRout");
 const cardsRout = require("./routes/cardsRout");
 const auth = require("./middlewares/auth");
-
 mongoose.connect("mongodb://localhost:27017/mestodb", {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -77,5 +76,5 @@ app.use((err, req, res, next) => {
   });
 });
 app.listen(PORT, () => {
-  // console.log(`App listening on port ${PORT}`);
+   console.log(`App listening on port ${PORT}`);
 });

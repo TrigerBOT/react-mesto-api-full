@@ -1,0 +1,12 @@
+@import url(./_hidden/card__delete_hidden.css);
+.card__delete{
+    background: url(../../../images/delete.svg) center no-repeat;
+    background-color: transparent;
+    border: none;
+    width: 18px;
+    height: 20px;
+    position: absolute;
+    top: 18px;
+    right: 15px;
+    cursor: pointer;
+}
