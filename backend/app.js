@@ -1,10 +1,10 @@
 const express = require("express");
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 const mongoose = require("mongoose");
 
 const app = express();
-
+require('dotenv').config();
 const { errors, celebrate, Joi } = require("celebrate");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 const { createUser, login } = require("./controllers/users");
@@ -35,7 +35,16 @@ app.use('*', cors({
   origin: 'http://kirill-trigerbot.nomoredomains.icu',
   credentials: true,
 }));
-
+const cors = require('cors');
+const options = {
+  origin: [
+  'http://localhost:3000',
+  'https://kirill-trigerbot.nomoredomains.icu',
+  'https://TrigerBOT.github.io',
+  ],
+  credentials: true // эта опция позволяет устанавливать куки
+};
+app.use('*', cors(options));
 app.get("/crash-test", () => {
   setTimeout(() => {
     throw new Error("Сервер сейчас упадёт");
