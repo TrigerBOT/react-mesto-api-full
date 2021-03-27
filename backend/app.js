@@ -30,6 +30,12 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+app.use('*', cors({
+  origin: 'http://kirill-trigerbot.nomoredomains.icu',
+  credentials: true,
+}));
+
 app.get("/crash-test", () => {
   setTimeout(() => {
     throw new Error("Сервер сейчас упадёт");
