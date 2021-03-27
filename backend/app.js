@@ -31,10 +31,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('*', cors({
-  origin: 'http://kirill-trigerbot.nomoredomains.icu',
-  credentials: true,
-}));
 const cors = require('cors');
 const options = {
   origin: [
@@ -44,6 +40,8 @@ const options = {
   ],
   credentials: true // эта опция позволяет устанавливать куки
 };
+app.use(requestLogger);
+app.use(errorLogger);
 app.use('*', cors(options));
 app.get("/crash-test", () => {
   setTimeout(() => {
@@ -51,9 +49,9 @@ app.get("/crash-test", () => {
   }, 0);
 });
 
-app.use(express.json());
-app.use(requestLogger); // логи запросов
-app.use(errorLogger);
+app.use(errors());
+ // логи запросов
+
 
 app.post(
   "/sign-up",
