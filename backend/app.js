@@ -35,7 +35,7 @@ const cors = require('cors');
 const options = {
   origin: [
   'http://localhost:3000',
-  'https://kirill-trigerbot.nomoredomains.icu',
+  'http://kirill-trigerbot.nomoredomains.icu',
   'https://TrigerBOT.github.io',
   ],
   credentials: true // эта опция позволяет устанавливать куки
