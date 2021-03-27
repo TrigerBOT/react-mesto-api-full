@@ -76,7 +76,7 @@ function App() {
   }, [history]);
 
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwt");
     if (token) {
       Auth.getContent(token)
         .then((res) => {
@@ -92,10 +92,10 @@ function App() {
     Auth.authorize(password, email)
       .then((data) => {
         console.log(data);
-        if (data.token) {
+        if (data.jwt) {
           handleLogin();
           setEmail(email);
-          history.push("/main");
+          history.push("/");
         } else {
           openPopupError();
         }
@@ -191,7 +191,7 @@ function App() {
 
   function handleSignOut() {
     setLoggedIn(false);
-    localStorage.removeItem("token");
+    localStorage.removeItem("jwt");
     setEmail("");
   }
   function handleLogin() {
@@ -206,7 +206,7 @@ function App() {
         <Switch>
           <ProtectedRoute
             exact
-            path="/main"
+            path="/"
             loggedIn={loggedIn}
             component={Main}
             onAddPlace={handleAddPlaceClick}
@@ -217,7 +217,7 @@ function App() {
             onDeleteClick={handleCardDelete}
             cards={cards}
           />
-          <ProtectedRoute path="/main" loggedIn={loggedIn} component={Footer} />
+          <ProtectedRoute path="/" loggedIn={loggedIn} component={Footer} />
           <Route path="/sign-up">
             <Register
               registration={register}
@@ -235,7 +235,7 @@ function App() {
             />
           </Route>
           <Route>
-            {loggedIn ? <Redirect to="sign-in" /> : <Redirect to="/main" />}
+            {loggedIn ? <Redirect to="sign-in" /> : <Redirect to="/" />}
           </Route>
         </Switch>
       </BrowserRouter>

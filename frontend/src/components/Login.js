@@ -11,7 +11,7 @@ function Login({ loggedIn, authorize }) {
 
   useEffect(() => {
     if (loggedIn) {
-      history.push("/main");
+      history.push("/");
     }
   }, [loggedIn]);
 

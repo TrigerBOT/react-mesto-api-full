@@ -41,7 +41,7 @@ app.use(requestLogger); // логи запросов
 app.use(errorLogger);
 
 app.post(
-  "/signup",
+  "/sign-up",
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().min(8).max(30),
@@ -54,7 +54,7 @@ app.post(
   createUser
 );
 app.post(
-  "/signin",
+  "/sign-in",
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
@@ -76,5 +76,5 @@ app.use((err, req, res, next) => {
   });
 });
 app.listen(PORT, () => {
-   console.log(`App listening on port ${PORT}`);
+  console.log(`App listening on port ${PORT}`);
 });
