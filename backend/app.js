@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 const mongoose = require("mongoose");
 
 const app = express();
@@ -30,26 +30,18 @@ app.use((req, res, next) => {
   }
   next();
 });
-
-const cors = require('cors');
-const options = {
-  origin: [
-  'http://api.kirill-trigerbot.nomoredomains.icu',
-  'http://kirill-trigerbot.nomoredomains.icu',
-  'https://TrigerBOT.github.io',
-  ],
-  credentials: true // эта опция позволяет устанавливать куки
-};
-app.use(requestLogger);
-app.use(errorLogger);
-app.use('*', cors(options));
 app.get("/crash-test", () => {
   setTimeout(() => {
     throw new Error("Сервер сейчас упадёт");
   }, 0);
 });
+app.use(express.json());
+app.use(requestLogger);
 
-app.use(errors());
+
+
+
+
  // логи запросов
 
 
@@ -76,12 +68,14 @@ app.post(
   }),
   login
 );
-app.use(auth);
-app.use("/users", usersRout);
-app.use("/cards", cardsRout);
+//app.use(auth);
+app.use("/users",auth, usersRout);
+app.use("/cards", auth,cardsRout);
 app.use("*", (req, res) => {
   res.status(404).send({ message: "Запрашиваемый ресурс не найден" });
 });
+app.use(errorLogger);
+app.use(errors());
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({
