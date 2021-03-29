@@ -52,7 +52,7 @@ function App() {
   }
   const history = useHistory();
 
-  console.log(localStorage);
+  console.log(loggedIn);
   React.useEffect(() => {
     api
       .getUserInfo()

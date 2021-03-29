@@ -3,7 +3,7 @@ import Unauthorized from "../errors/Unauthorized";
 import { baseUrl } from "./constants";
 
 export const register = (password, email) => {
-  return fetch(`${baseUrl}/signup`, {
+  return fetch(`${baseUrl}/sign-up`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const register = (password, email) => {
 };
 
 export const authorize = (password, email) => {
-  return fetch(`${baseUrl}/signin`, {
+  return fetch(`${baseUrl}/sign-in`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

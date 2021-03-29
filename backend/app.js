@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 const mongoose = require("mongoose");
 
 const app = express();
@@ -17,6 +17,17 @@ mongoose.connect("mongodb://localhost:27017/mestodb", {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
+const cors = require('cors');
+app.use(express.json());
+const options = {
+  origin: [
+  'http://localhost:3000',
+  'http://kirill-trigerbot.nomoredomains.icu',
+  'https://TrigerBOT.github.io',
+  ],
+  credentials: true // эта опция позволяет устанавливать куки
+};
+app.use('*', cors(options));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -35,7 +46,7 @@ app.get("/crash-test", () => {
     throw new Error("Сервер сейчас упадёт");
   }, 0);
 });
-app.use(express.json());
+
 app.use(requestLogger);
 
 
@@ -68,15 +79,15 @@ app.post(
   }),
   login
 );
-//app.use(auth);
-app.use("/users",auth, usersRout);
-app.use("/cards", auth,cardsRout);
+app.use(auth);
+app.use("/users", usersRout);
+app.use("/cards", cardsRout);
 app.use("*", (req, res) => {
   res.status(404).send({ message: "Запрашиваемый ресурс не найден" });
 });
 app.use(errorLogger);
 app.use(errors());
-app.use((err, req, res, next) => {
+app.use(( req, res, err) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({
     message: statusCode === 500 ? "На сервере произошла ошибка" : message,

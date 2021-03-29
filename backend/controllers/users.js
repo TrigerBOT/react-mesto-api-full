@@ -5,7 +5,7 @@ const BadRequestError = require('../errors/bad-request');
 const UnauthorizedError = require('../errors/unauthorized');
 const ForbiddenError = require('../errors/forbidden');
 const ConflictError = require('../errors/conflict-err');
-
+const bcrypt = require("bcryptjs");
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 
@@ -52,7 +52,7 @@ const createUser = (req, res, next) => {
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
     }))
-    .then((user) => res.status(200).send({ mail: user.email }))
+    .then((user) => res.status(200).send({ email: user.email }))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         throw new BadRequestError('Данные не прошли валидацию');
