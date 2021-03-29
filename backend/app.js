@@ -1,10 +1,8 @@
 const express = require("express");
-
 const { PORT = 3001 } = process.env;
 const mongoose = require("mongoose");
-
 const app = express();
-require('dotenv').config();
+require("dotenv").config();
 const { errors, celebrate, Joi } = require("celebrate");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 const { createUser, login } = require("./controllers/users");
@@ -17,30 +15,17 @@ mongoose.connect("mongodb://localhost:27017/mestodb", {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
-const cors = require('cors');
+const cors = require("cors");
 app.use(express.json());
 const options = {
   origin: [
-  'http://localhost:3000',
-  'http://kirill-trigerbot.nomoredomains.icu',
-  'https://TrigerBOT.github.io',
+    "http://localhost:3000",
+    "http://kirill-trigerbot.nomoredomains.icu",
+    "https://TrigerBOT.github.io",
   ],
-  credentials: true // эта опция позволяет устанавливать куки
-};
-app.use('*', cors(options));
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
-  );
-  if (req.method === "OPTIONS") {
-    res.send(200);
-  }
-  next();
-});
+};
+app.use(cors(options));
 app.get("/crash-test", () => {
   setTimeout(() => {
     throw new Error("Сервер сейчас упадёт");
@@ -49,12 +34,7 @@ app.get("/crash-test", () => {
 
 app.use(requestLogger);
 
-
-
-
-
- // логи запросов
-
+// логи запросов
 
 app.post(
   "/sign-up",
@@ -87,7 +67,7 @@ app.use("*", (req, res) => {
 });
 app.use(errorLogger);
 app.use(errors());
-app.use(( req, res, err) => {
+app.use((req, res, err) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({
     message: statusCode === 500 ? "На сервере произошла ошибка" : message,
