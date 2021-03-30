@@ -6,7 +6,7 @@ export default function Main({ onEditAvatar,
     onAddPlace, cards, onCardClick,onLikeClick,onDeleteClick }) {
 
     const currentUser = React.useContext(CurrentUserContext);
-
+    console.log(currentUser);
 
     return (
         <div className="main">

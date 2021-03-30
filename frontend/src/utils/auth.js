@@ -23,46 +23,53 @@ export const register = (password, email) => {
   });
 };
 
-export const authorize = (password, email) => {
-  return fetch(`${baseUrl}/sign-in`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ password, email }),
-  })
-    .then((res) => {
-      if (res.status === 400) {
-        throw new BadRequest("Данные переданы не полностью или с ошибкой");
-      }
-      if (res.status === 401) {
-        throw new Unauthorized("пользователь с email не найден");
-      }
-      return res.json();
-    })
-    .then((data) => {
-      if (data.jwt) {
-        localStorage.setItem("jwt", data.jwt);
+  
 
-        return data;
-      }
-    });
-};
-export const getContent = (token) => {
+export const authorize = (password, email) => fetch(`${baseUrl}/sign-in`, {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json'
+	},
+	body: JSON.stringify({ password, email }),
+})
+.then((res) => {
+  	return res.json()
+})
+	.then((res) => {
+		if (res.jwt) {
+			localStorage.setItem('jwt', res.jwt);
+      console.log(res)
+			return res;
+		}
+	})
+.catch(err => {
+	if (err.status === 400) {
+		throw new BadRequest('Не передано одно из полей');
+	} else if (err.status === 401) {
+		throw new Unauthorized('Пользователь с таким email не найден');
+	}
+
+	throw Error(`Произошла ошибка: ${err.status}`);
+});
+
+
+
+
+export const getContent = (jwt) => {
   return fetch(`${baseUrl}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `${jwt}`,
     },
   })
     .then((res) => {
-      if (!res.ok) {
-        return res.json().then((err) => {
-          throw new Unauthorized(err.message);
-        });
-      }
-      return res.json();
+      
+      return res.json() 
+    }).catch((err) => {
+      throw new Unauthorized(err.message)
     })
-    .then((data) => data);
+
 };
+
+// Bearer 

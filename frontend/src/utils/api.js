@@ -12,23 +12,12 @@ class Api {
       headers: {
         authorization: this._token,
       },
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    }).then((res) =>{
+    return  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
     );
   }
 
-  //Выгрузить данные профиля с сервера
-  getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
-      headers: {
-        authorization: this._token,
-        "Content-Type": "application/json",
-      },
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-    );
-  }
+
 
   //Редактирование данных профиля
   editUserInfo(item) {
@@ -42,8 +31,9 @@ class Api {
         name: item.name,
         about: item.about,
       }),
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    }).then((res) =>{
+    console.log(res);
+     return  res.json() }
     );
   }
 
@@ -59,8 +49,8 @@ class Api {
         name: item.name,
         link: item.link,
       }),
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    }).then((res) =>{
+      return  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
     );
   }
 
@@ -71,8 +61,8 @@ class Api {
       headers: {
         authorization: this._token,
       },
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    }).then((res) =>{
+      return  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
     );
   }
 
@@ -87,8 +77,8 @@ class Api {
       body: JSON.stringify({
         avatar: item.avatar,
       }),
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    }).then((res) =>{
+      return  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
     );
   }
 
@@ -100,8 +90,8 @@ class Api {
           authorization: this._token,
           "Content-Type": "application/json",
         },
-      }).then((res) =>
-        res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+      }).then((res) =>{
+        return  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
       );
     } else {
       return fetch(`${this._baseUrl}/cards/likes/${item}`, {
@@ -109,8 +99,8 @@ class Api {
         headers: {
           authorization: this._token,
         },
-      }).then((res) =>
-        res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+      }).then((res) =>{
+        return  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
       );
     }
   }

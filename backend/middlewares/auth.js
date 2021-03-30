@@ -1,11 +1,13 @@
+
 const jwt = require('jsonwebtoken');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
- const auth =(req, res, next)=>{
+module.exports = (req, res, next) => {
   const token = req.headers.authorization;
-
+  console.log(token + "  token");
   if (!token) {
+    console.log("piz")
     return res.status(401).send({ message: 'Необходима авторизация' });
   }
 
@@ -14,6 +16,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
   try {
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
   } catch (err) {
+    console.log('ver');
     return res.status(401).send({ message: 'Необходима авторизация' });
   }
 
@@ -21,4 +24,3 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 
   return next();
 };
-module.exports = auth;

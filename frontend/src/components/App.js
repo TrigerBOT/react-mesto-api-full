@@ -52,18 +52,9 @@ function App() {
   }
   const history = useHistory();
 
-  console.log(loggedIn);
+ 
   React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) =>
-        console.log(`Ошибка при загрузке информации о пользователе: ${err}`)
-      );
-  }, [history]);
-  useEffect(() => {
+    if(loggedIn){
     api
       .getInitialsCards()
       .then((cards) => {
@@ -72,36 +63,48 @@ function App() {
 
       .catch((err) => {
         console.log(err + " карточки");
-      });
-  }, [history]);
-
+      });}
+  }, [loggedIn]);
+  console.log(currentUser);
   React.useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (token) {
-      Auth.getContent(token)
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      Auth.getContent(jwt)
         .then((res) => {
+          console.log("getme");
           setLoggedIn(true);
+          setCurrentUser(res.data);
           setEmail(res.data.email);
           return true;
         })
         .catch((err) => console.log(err));
     }
-  }, [history]);
+  }, []);
 
   function authorize(password, email) {
     Auth.authorize(password, email)
       .then((data) => {
-        console.log(data);
-        if (data.jwt) {
-          handleLogin();
-          setEmail(email);
-          history.push("/");
+        console.log(data + "auth");
+        if (data) {
+          Auth.getContent(data.jwt)
+        .then((res) => {
+          console.log("getme");
+          setLoggedIn(true);
+          setCurrentUser(res.data);
+          setEmail(res.data.email);
+          console.log(currentUser)
+          return true;
+            
+            })
+            .catch((err) => console.log(err));
+          setLoggedIn(true);
         } else {
           openPopupError();
         }
       })
       .catch((err) => console.log(err));
   }
+
   function register(password, email) {
     Auth.register(password, email)
       .then((res) => {
@@ -192,18 +195,45 @@ function App() {
   function handleSignOut() {
     setLoggedIn(false);
     localStorage.removeItem("jwt");
+    setCurrentUser({});
     setEmail("");
+    console.log('dsa')
   }
   function handleLogin() {
     setLoggedIn(true);
   }
-  console.log(loggedIn);
+  
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <BrowserRouter>
         <Header email={email} loggedIn={loggedIn} onSignOut={handleSignOut} />
         <Switch>
+          <Route path="/sign-up">
+            {loggedIn ? (
+              <Redirect to="/" />
+            ) : (
+              <Register
+                registration={register}
+                setRegin={setRegin}
+                registered={registered}
+              />
+            )}
+          </Route>
+          <Route path="/sign-in">
+            {loggedIn ? (
+              <Redirect to="/" />
+            ) : (
+              <Login
+                handleLogin={handleLogin}
+                handleEmail={setEmail}
+                loggedIn={loggedIn}
+                authorize={authorize}
+                openPopupError={openPopupError}
+              />
+            )}
+          </Route>
+
           <ProtectedRoute
             exact
             path="/"
@@ -218,25 +248,6 @@ function App() {
             cards={cards}
           />
           <ProtectedRoute path="/" loggedIn={loggedIn} component={Footer} />
-          <Route path="/sign-up">
-            <Register
-              registration={register}
-              setRegin={setRegin}
-              registered={registered}
-            />
-          </Route>
-          <Route path="/sign-in">
-            <Login
-              handleLogin={handleLogin}
-              handleEmail={setEmail}
-              loggedIn={loggedIn}
-              authorize={authorize}
-              openPopupError={openPopupError}
-            />
-          </Route>
-          <Route>
-            {loggedIn ? <Redirect to="sign-in" /> : <Redirect to="/" />}
-          </Route>
         </Switch>
       </BrowserRouter>
       <EditAvatarPopup

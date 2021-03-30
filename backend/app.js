@@ -14,6 +14,7 @@ mongoose.connect("mongodb://localhost:27017/mestodb", {
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
+  autoIndex: true
 });
 const cors = require("cors");
 app.use(express.json());
