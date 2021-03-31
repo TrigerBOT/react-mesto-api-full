@@ -29,7 +29,7 @@ const cardLikeButtonClassName =(`${!isLiked ? 'card__like' : 'card__liked'}`);
     <div className="card__text">
         <h3 className="card__title">{card.name}</h3>
       <div className="card__likearea">
-            <button className={cardLikeButtonClassName} onClick={onLikeClick.bind(card)}></button>
+            <button className={cardLikeButtonClassName} onClick={onLikeClick.bind(null,card)}></button>
           <p className="card__counter">{card.likes.length}</p>    
       </div>
     </div>

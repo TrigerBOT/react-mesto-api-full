@@ -1,4 +1,4 @@
-export const baseUrl = `${window.location.protocol}${ '//localhost:3001'}`
+export const baseUrl = `${window.location.protocol}${  '//localhost:3001'}`
 export const authorization = `${localStorage.getItem('jwt')}`;
 
 
