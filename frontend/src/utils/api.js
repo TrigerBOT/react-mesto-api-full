@@ -13,7 +13,7 @@ class Api {
         authorization: this._token,
       },
     }).then((res) =>{
-    return  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
+    return   res.json()}
     );
   }
 
@@ -50,7 +50,8 @@ class Api {
         link: item.link,
       }),
     }).then((res) =>{
-      return  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
+       
+       return res.json()}
     );
   }
 
@@ -62,7 +63,7 @@ class Api {
         authorization: this._token,
       },
     }).then((res) =>{
-      return  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
+      return  res.json() }
     );
   }
 
@@ -78,12 +79,12 @@ class Api {
         avatar: item.avatar,
       }),
     }).then((res) =>{
-      return  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
+      return   res.json() }
     );
   }
 
   changeLikeCardStatus(item, isLiked) {
-    if (isLiked) {
+    if (!isLiked) {
       return fetch(`${this._baseUrl}/cards/likes/${item}`, {
         method: "PUT",
         headers: {
@@ -91,7 +92,7 @@ class Api {
           "Content-Type": "application/json",
         },
       }).then((res) =>{
-        return  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
+        return   res.json() }
       );
     } else {
       return fetch(`${this._baseUrl}/cards/likes/${item}`, {
@@ -100,7 +101,7 @@ class Api {
           authorization: this._token,
         },
       }).then((res) =>{
-        return  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
+        return  res.json() }
       );
     }
   }

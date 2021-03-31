@@ -1,14 +1,16 @@
 import React from 'react';
 import Card from './Card.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import Footer from "../components/Footer";
 export default function Main({ onEditAvatar,
     onEditProfile,
-    onAddPlace, cards, onCardClick,onLikeClick,onDeleteClick }) {
+    onAddPlace, cards, onCardClick,onLikeClick,onDeleteClick, }) {
 
     const currentUser = React.useContext(CurrentUserContext);
     console.log(currentUser);
 
     return (
+        <>
         <div className="main">
             <section className="profile">
                 <div className="profile__avatar">
@@ -39,5 +41,7 @@ export default function Main({ onEditAvatar,
                     />
                 ))}
             </section>
-        </div>);
+        </div>
+        
+        <Footer /> </>);
 }

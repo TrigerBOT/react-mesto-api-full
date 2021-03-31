@@ -10,7 +10,7 @@ import {
 import Header from "./Header";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Main from "./Main";
-import Footer from "./Footer";
+
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -120,17 +120,28 @@ function App() {
   }
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api
-      .changeLikeCardStatus(card._id, !isLiked)
+      .changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
         // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-        const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+        const newCards = cards.map((c) => (c._id === card._id ? newCard.data : c));
         // Обновляем стейт
         setCards(newCards);
       })
       .catch((err) => console.log(`Ошибка: ${err}`));
+  }
+  function handleAddPlace(card) {
+    api
+      .postCard(card)
+      .then((newCard) => {
+        setCards([newCard.data, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) =>
+        console.log(`Ошибка при добавлении новой карточки: ${err}`)
+      );
   }
   function handleCardDelete(cardToDelete) {
     api
@@ -171,17 +182,7 @@ function App() {
     setImagePopupOpen(true);
     setSelectedCard(card);
   }
-  function handleAddPlace(card) {
-    api
-      .postCard(card)
-      .then((newCard) => {
-        setCards([newCard, ...cards]);
-        closeAllPopups();
-      })
-      .catch((err) =>
-        console.log(`Ошибка при добавлении новой карточки: ${err}`)
-      );
-  }
+
   //14 спринт новые данные,функции (структориз  овать позже)
 
   function openPopupError() {
@@ -247,7 +248,7 @@ function App() {
             onDeleteClick={handleCardDelete}
             cards={cards}
           />
-          <ProtectedRoute path="/" loggedIn={loggedIn} component={Footer} />
+          
         </Switch>
       </BrowserRouter>
       <EditAvatarPopup

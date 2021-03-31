@@ -17,10 +17,10 @@ module.exports.createCard = (req, res) => {
     });
 };
 
-module.exports.getAllCards = (req, res) => {
+module.exports.getAllCards = (req, res,next )=> {
   Card.find({})
-    .then((card) => res.status(200).send({ data: card }))
-    .catch(() => res.status(500).send({ message: 'На сервере произошла ошибка' }));
+    .then((cards) => res.status(200).send(cards))
+    .catch(next);
 };
 
 module.exports.deleteCard = (req, res) => {
