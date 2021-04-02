@@ -8,6 +8,7 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const { createUser, login } = require("./controllers/users");
 const usersRout = require("./routes/usersRout");
 const cardsRout = require("./routes/cardsRout");
+const NotFoundError = require('./errors/not-found-err');
 const auth = require("./middlewares/auth");
 mongoose.connect("mongodb://localhost:27017/mestodb", {
   useNewUrlParser: true,
@@ -43,7 +44,7 @@ app.post(
     body: Joi.object().keys({
       name: Joi.string().min(8).max(30),
       about: Joi.string().min(2).max(30),
-      avatar: Joi.string(),
+      avatar: Joi.string().trim().uri(),
       email: Joi.string().required().email(),
       password: Joi.string().required(),
     }),
@@ -63,8 +64,8 @@ app.post(
 app.use(auth);
 app.use("/users", usersRout);
 app.use("/cards", cardsRout);
-app.use("*", (req, res) => {
-  res.status(404).send({ message: "Запрашиваемый ресурс не найден" });
+app.use('*', () => {
+  throw new NotFoundError('Запрашиваемый ресурс не найден');
 });
 app.use(errorLogger);
 app.use(errors());
