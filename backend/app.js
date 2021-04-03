@@ -21,8 +21,8 @@ const cors = require("cors");
 app.use(express.json());
 const options = {
   origin: [
-    "http://localhost:3000",
-    "http://kirill-trigerbot.nomoredomains.icu",
+    "https://localhost:3000",
+    "https://kirill-trigerbot.nomoredomains.icu",
     "https://TrigerBOT.github.io",
   ],
 
